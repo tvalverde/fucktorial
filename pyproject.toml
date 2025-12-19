@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fucktorial"
+version = "0.1.0"
+description = "Automated clock-in bot for FactorialHR"
+authors = ["CodeCompanion"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+playwright = "^1.57.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-playwright = "^0.4.0"
+pytest-cov = "^5.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

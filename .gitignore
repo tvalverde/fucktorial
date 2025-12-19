@@ -1,0 +1,15 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv
+venv
+env/
+ENV/
+
+# Project-specific ignores
+/data/
+debug_timeoff.py
+.coverage

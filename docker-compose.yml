@@ -1,0 +1,12 @@
+services:
+  bot:
+    build: .
+    image: fucktorial
+    volumes:
+      - ./:/app
+      - ./data:/app/data
+      - ./src:/app/src
+    stdin_open: true
+    tty: true
+    environment:
+      - PYTHONPATH=/app
