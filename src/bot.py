@@ -21,16 +21,16 @@ class FactorialBot:
         self.dry_run = dry_run
 
     async def run(self):
+        # New logic: process the last 30 days
         today = datetime.now()
-        start_of_current_week = today - timedelta(days=today.weekday())
-        start_of_last_week = start_of_current_week - timedelta(days=7)
-        end_of_last_week = start_of_last_week + timedelta(days=6)
+        end_date = today - timedelta(days=1)
+        start_date = today - timedelta(days=30)
         
-        print(f"Processing week: {start_of_last_week.date()} to {end_of_last_week.date()}")
+        print(f"Processing range: {start_date.date()} to {end_date.date()}")
         
-        absences = await self.detect_absences(start_of_last_week, end_of_last_week)
+        absences = await self.detect_absences(start_date, end_date)
         
-        await self.process_attendance(start_of_last_week, end_of_last_week, absences)
+        await self.process_attendance(start_date, end_date, absences)
 
     async def detect_absences(self, start_date: datetime, end_date: datetime) -> Absences:
         print("Detecting absences...")

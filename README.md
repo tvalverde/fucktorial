@@ -1,14 +1,14 @@
 # Fucktorial Bot
 
-This is an automated bot that intelligently fills in your weekly timesheet on FactorialHR (https://factorialhr.com), designed to automate the repetitive task of manual clock-ins.
+This is an automated bot that intelligently fills in your timesheet on FactorialHR (https://factorialhr.com), designed to automate the repetitive task of manual clock-ins.
 
-Powered by Python and Playwright, the script runs in a Docker container and is ideal for scheduling as a weekly cron job.
+Powered by Python and Playwright, the script runs in a Docker container and is ideal for scheduling as a periodic cron job.
 
 ### Core Features:
 
 *   **Secure Authentication:** Handles interactive email/password and 2FA login on the first run, then uses the saved session state for secure, non-interactive logins on subsequent runs.
 *   **Intelligent Absence Detection:** Automatically scans the time-off calendar to identify vacations, sick leave, public holidays, and other custom absences. It correctly interprets full-day and half-day leave to adjust clock-in times accordingly.
-*   **Automated Timesheet Filling:** Fills out the previous full week's timesheet based on a standard work schedule. It is smart enough to skip weekends, holidays, and any days that already have hours logged.
+*   **Automated Timesheet Filling:** Fills out the timesheet for the last 30 days based on a standard work schedule. It is smart enough to skip weekends, holidays, and any days that already have hours logged.
 *   **Safe Dry-Run Mode:** By default, the bot runs in a "dry run" mode that simulates all actions without actually saving any data, allowing you to safely verify its behavior before execution.
 
 ## Prerequisites
@@ -48,7 +48,7 @@ To perform the actual clock-in and save the changes, use the `--execute` flag.
 docker compose run --rm bot python src/main.py --execute
 ```
 
-This command will fill in the timesheet for the previous week. It's recommended to run this on a Monday.
+This command will fill in the timesheet for the 30 days prior to the execution date. You can run it periodically to catch up on any missed entries.
 
 ### Force New Login
 
