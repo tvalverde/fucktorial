@@ -1,0 +1,10 @@
+# Schedule Configuration for Fucktorial Bot
+
+[schedule]
+# Monday to Thursday shifts
+# These are tuples of [start_time, end_time]
+normal_day_morning = ["08:30", "14:00"]
+normal_day_afternoon = ["15:00", "18:00"]
+
+# Friday shift
+friday_continuous = ["08:30", "15:00"]

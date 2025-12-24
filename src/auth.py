@@ -3,10 +3,16 @@ import getpass
 import asyncio
 from playwright.async_api import async_playwright, Page, BrowserContext
 from src.constants import (
-    URL_DASHBOARD, URL_LOGIN, SELECTOR_EMAIL, SELECTOR_PASSWORD, 
-    SELECTOR_SUBMIT, SELECTOR_2FA_INPUT, AUTH_FILE_PATH
+    URL_DASHBOARD,
+    URL_LOGIN,
+    SELECTOR_EMAIL,
+    SELECTOR_PASSWORD,
+    SELECTOR_SUBMIT,
+    SELECTOR_2FA_INPUT,
+    AUTH_FILE_PATH,
 )
 from src.navigator import Navigator
+
 
 class Authenticator:
     def __init__(self, force_login: bool = False):
@@ -16,7 +22,7 @@ class Authenticator:
     async def authenticate(self) -> str:
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
-            
+
             # Check if auth file exists and try to use it
             context = None
             if os.path.exists(self.auth_file) and not self.force_login:
@@ -34,7 +40,7 @@ class Authenticator:
             except Exception as e:
                 print(f"Navigation failed: {e}")
                 # If navigation fails, we might need login
-            
+
             final_url = page.url
             if URL_LOGIN in final_url or self.force_login:
                 print("Session invalid or forced login. Starting interactive login...")
@@ -50,14 +56,14 @@ class Authenticator:
                     print("Session valid.")
                 await context.close()
                 await browser.close()
-        
+
         return self.auth_file
 
     async def _interactive_login(self):
         # Interactive login requires tty, so we might need headless=False if running locally
         # But instructions say: "Si la sesión es inválida, lanzar navegador (headless=True)."
         # And then ask for input in console.
-        
+
         email = input("Email: ")
         password = getpass.getpass("Password: ")
 
@@ -84,13 +90,15 @@ class Authenticator:
                 print("Waiting for navigation to dashboard...")
                 await page.wait_for_url("**/dashboard", timeout=60000)
                 print("Login successful!")
-                
+
                 # Save storage state
                 await context.storage_state(path=self.auth_file)
-                
+
             except Exception as e:
                 print(f"Login failed or timeout: {e}")
-                screenshot_path = os.path.join(os.path.dirname(self.auth_file), "login_failure.png")
+                screenshot_path = os.path.join(
+                    os.path.dirname(self.auth_file), "login_failure.png"
+                )
                 print(f"Saving screenshot to {screenshot_path}")
                 await page.screenshot(path=screenshot_path)
                 raise e

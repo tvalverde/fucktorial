@@ -5,7 +5,7 @@ description = "Automated clock-in bot for FactorialHR"
 authors = ["CodeCompanion"]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<4.0"
+python = ">=3.11,<4.0"
 playwright = "^1.57.0"
 
 [tool.poetry.group.dev.dependencies]
