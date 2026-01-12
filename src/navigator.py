@@ -27,10 +27,10 @@ class Navigator:
     async def fill_input(self, selector: str, value: str, timeout: int = 5000):
         try:
             print(f"Filling {selector}")
-            await self.page.wait_for_selector(
-                selector, state="visible", timeout=timeout
-            )
-            await self.page.fill(selector, value)
+            locator = self.page.locator(selector)
+            await locator.wait_for(state="visible", timeout=timeout)
+            await locator.click()
+            await locator.fill(value)
         except PlaywrightTimeoutError:
             print(
                 f"Error: Element {selector} not found or not visible within {timeout}ms"

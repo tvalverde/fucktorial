@@ -80,8 +80,12 @@ class Authenticator:
             await nav.safe_click(SELECTOR_SUBMIT)
 
             # 2FA Step
-            print("Waiting for 2FA input field...")
+            print("Waiting for page to load after credential submission...")
             try:
+                # Wait for navigation to complete after submitting credentials
+                await page.wait_for_load_state("networkidle", timeout=15000)
+
+                print("Waiting for 2FA input field...")
                 await page.wait_for_selector(SELECTOR_2FA_INPUT, timeout=10000)
                 code = input("🔐 Introduce el código 2FA de tu app: ")
                 await nav.fill_input(SELECTOR_2FA_INPUT, code)
